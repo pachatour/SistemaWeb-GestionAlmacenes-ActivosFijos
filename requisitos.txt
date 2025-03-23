@@ -1,0 +1,8 @@
+DONDE HOSTEAR MI PROYECTO:
+GitHub Pages
+Vercel
+Netlify
+Firebase
+
+PASOS: 
+-instalar node.js
