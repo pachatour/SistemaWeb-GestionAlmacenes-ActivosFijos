@@ -3,6 +3,7 @@ import{
     createBrowserRouter
 } from "react-router-dom";
 import { Dashboard, Login } from "../pages";
+import NotFound from "../pages/NotFound";
 
 const router = createBrowserRouter([
     {
@@ -12,6 +13,10 @@ const router = createBrowserRouter([
     {
         path: "/Login",
         element: <Login></Login>
+    },
+    {
+        path: "*", // Maneja cualquier ruta no definida
+        element: <NotFound></NotFound>
     }
 ]);
 
