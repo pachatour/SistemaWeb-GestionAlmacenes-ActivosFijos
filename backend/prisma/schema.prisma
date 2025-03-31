@@ -13,20 +13,68 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Usuario{
+model Usuario {
   id              Int      @id @default(autoincrement())
   nombre_usuario  String
-  email           String
+  email           String  @unique
   constrasena     String
-  tipo_usuario TipoUsuario? @relation(fields: [id_tipo_usuario],references:[id])
+  tipo_usuario    TipoUsuario  @relation(fields: [id_tipo_usuario], references: [id])
   id_tipo_usuario Int
+  reportes        Reporte[]  // Relación con Reporte
   @@map("usuarios")
 }
 
-model TipoUsuario{
+model TipoUsuario {
   id                    Int      @id @default(autoincrement())
   nombre                String
   parametro_edit_config Boolean
-  usuario Usuario[]
+  usuarios              Usuario[]
   @@map("tipo_usuarios")
+}
+
+model Activo {
+  id                Int      @id @default(autoincrement())
+  nombre            String
+  codigoBarras      String
+  descripcion       String?
+  estado           EstadoActivo @relation(fields: [id_estado], references: [id])
+  id_estado        Int
+  ubicacion        Ubicacion @relation(fields: [id_ubicacion], references: [id])
+  id_ubicacion     Int
+  categoria        Categoria @relation(fields: [id_categoria], references: [id])
+  id_categoria     Int
+  reportes         Reporte[]  // Relación con Reporte
+  @@map("activos")
+}
+
+model EstadoActivo {
+  id      Int      @id @default(autoincrement())
+  nombre  String
+  activos Activo[]
+  @@map("estado_activos")
+}
+
+model Ubicacion {
+  id      Int      @id @default(autoincrement())
+  nombre  String
+  activos Activo[]
+  @@map("ubicaciones")
+}
+
+model Categoria {
+  id      Int     @id @default(autoincrement())
+  nombre  String
+  activos Activo[]
+  @@map("categorias")
+}
+
+model Reporte {
+  id                Int      @id @default(autoincrement())
+  fecha_generacion  DateTime @default(now())
+  usuario           Usuario  @relation(fields: [id_usuario], references: [id])
+  id_usuario        Int
+  activo            Activo   @relation(fields: [id_activo], references: [id])
+  id_activo         Int
+  descripcion       String?
+  @@map("reportes")
 }

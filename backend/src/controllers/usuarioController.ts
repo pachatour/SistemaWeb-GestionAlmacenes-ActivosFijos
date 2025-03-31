@@ -2,7 +2,6 @@ import { Request,Response } from "express"
 import { CreateUsuarioService } from "../services/usuarioService"
 
 class CreateUsuarioController{
-    
 
     async crearTipoUsuario(req:Request,res:Response){
         const usuarioService = new CreateUsuarioService()
@@ -34,6 +33,10 @@ class CreateUsuarioController{
             }
         }
     }
+
+    
 }
+
+
 
 export {CreateUsuarioController}
